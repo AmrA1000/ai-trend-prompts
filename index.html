@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Trend · Промпты для урока</title>
+<style>
+/* ── TOKENS ───────────────────────────────────── */
+:root {
+  --bg:       #f5f5f7;
+  --surface:  #ffffff;
+  --surface2: #f5f5f7;
+  --text:     #1d1d1f;
+  --text2:    #6e6e73;
+  --text3:    #aeaeb2;
+  --border:   rgba(0,0,0,0.08);
+  --shadow:   0 2px 20px rgba(0,0,0,0.06), 0 1px 6px rgba(0,0,0,0.04);
+  --shadow-s: 0 1px 6px rgba(0,0,0,0.05);
+  --btn:      #1d1d1f;
+  --btn-t:    #ffffff;
+  --btn2:     #f5f5f7;
+  --btn2-t:   #1d1d1f;
+  --inp:      #ffffff;
+  --inp-b:    #d2d2d7;
+  --nav-bg:   rgba(255,255,255,0.82);
+  --blue:     #0071e3;
+  --green:    #34c759;
+  --r:        16px;
+  --rm:       11px;
+}
+[data-theme="dark"] {
+  --bg:       #000000;
+  --surface:  #1c1c1e;
+  --surface2: #2c2c2e;
+  --text:     #f5f5f7;
+  --text2:    rgba(235,235,245,.55);
+  --text3:    #48484a;
+  --border:   rgba(255,255,255,0.09);
+  --shadow:   0 2px 24px rgba(0,0,0,.55);
+  --shadow-s: 0 1px 8px rgba(0,0,0,.4);
+  --btn:      #f5f5f7;
+  --btn-t:    #1d1d1f;
+  --btn2:     #2c2c2e;
+  --btn2-t:   #f5f5f7;
+  --inp:      #1c1c1e;
+  --inp-b:    #38383a;
+  --nav-bg:   rgba(28,28,30,0.85);
+  --blue:     #2997ff;
+}
+
+/* ── RESET ────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  transition: background .3s, color .3s;
+}
+
+/* ── NAV ──────────────────────────────────────── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--nav-bg);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.nav-logo {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.3px;
+  white-space: nowrap;
+  margin-right: 40px;
+  flex-shrink: 0;
+}
+.nav-logo span { color: var(--blue); }
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+.nav-tab {
+  padding: 6px 16px;
+  border-radius: 980px;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.nav-tab:hover { color: var(--text); background: var(--surface2); }
+.nav-tab.on {
+  background: var(--btn);
+  color: var(--btn-t);
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.theme-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .15s, box-shadow .2s;
+  box-shadow: var(--shadow-s);
+}
+.theme-btn:hover { transform: scale(1.08); }
+.theme-btn:active { transform: scale(.93); }
+
+/* ── PAGE WRAPPER ─────────────────────────────── */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 32px 64px;
+}
+
+/* ── NAME CARD ────────────────────────────────── */
+.name-card {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.nc-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.nc-fields {
+  display: flex;
+  gap: 14px;
+  flex: 1;
+  min-width: 300px;
+}
+.nc-field {
+  flex: 1;
+  position: relative;
+}
+.nc-field label {
+  position: absolute;
+  top: -9px; left: 12px;
+  background: var(--surface);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--blue);
+  padding: 0 4px;
+  z-index: 1;
+}
+.nc-field input {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--inp);
+  border: 1.5px solid var(--inp-b);
+  border-radius: var(--rm);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.nc-field input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0,113,227,.12);
+}
+.nc-field input::placeholder { color: var(--text3); }
+.nc-hint {
+  font-size: 13px;
+  color: var(--text2);
+  white-space: nowrap;
+  padding: 8px 14px;
+  background: var(--surface2);
+  border-radius: var(--rm);
+  flex-shrink: 0;
+  min-width: 220px;
+  text-align: center;
+}
+.nc-hint strong { color: var(--blue); }
+
+/* ── SECTION ──────────────────────────────────── */
+.sec { display: none; animation: fu .25s ease; }
+.sec.on { display: block; }
+@keyframes fu { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+.sec-hdr { margin-bottom: 24px; }
+.sec-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.sec-title { font-size: 32px; font-weight: 700; letter-spacing: -.5px; }
+.sec-sub { font-size: 15px; color: var(--text2); margin-top: 6px; }
+
+/* ── GRID ─────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 18px;
+}
+.grid-3 {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+/* ── CARD ─────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s, box-shadow .2s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+}
+.card-top {
+  padding: 20px 20px 0;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.card-icon {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.card-meta { flex: 1; min-width: 0; }
+.card-badges {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.bdg {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 9px;
+  border-radius: 980px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1px;
+}
+.b-star   { background:#fff8e1; color:#d97706; }
+.b-time   { background:#e8f5e9; color:#16a34a; }
+.b-top    { background:#1d1d1f; color:#fff; }
+.b-blue   { background:#eff6ff; color:#2563eb; }
+.b-pink   { background:#fdf2f8; color:#be185d; }
+.b-pur    { background:#f5f3ff; color:#7c3aed; }
+.b-hero   { background:#fef3c7; color:#b45309; }
+.b-kz     { background:#e0f2fe; color:#0369a1; }
+[data-theme="dark"] .b-star  { background:#2c2000; color:#f59e0b; }
+[data-theme="dark"] .b-time  { background:#002211; color:#22c55e; }
+[data-theme="dark"] .b-top   { background:#f5f5f7; color:#1d1d1f; }
+[data-theme="dark"] .b-blue  { background:#001233; color:#60a5fa; }
+[data-theme="dark"] .b-pink  { background:#2d0018; color:#f472b6; }
+[data-theme="dark"] .b-pur   { background:#1e0d3f; color:#a78bfa; }
+[data-theme="dark"] .b-hero  { background:#2c1800; color:#fbbf24; }
+[data-theme="dark"] .b-kz   { background:#001825; color:#38bdf8; }
+
+.card-name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.3px;
+  margin-bottom: 3px;
+}
+.card-desc { font-size: 13px; color: var(--text2); line-height: 1.45; }
+.card-tag {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text2);
+}
+.card-tag .nv { color: var(--blue); font-weight: 600; }
+
+/* ── PROMPT BOX ───────────────────────────────── */
+.pbox {
+  margin: 14px 20px 0;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--rm);
+  padding: 13px 14px;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--text);
+  max-height: 180px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: text;
+  flex-shrink: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* ── ACTIONS ──────────────────────────────────── */
+.card-actions {
+  padding: 12px 20px 20px;
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+.btn-p {
+  flex: 1; padding: 11px 16px;
+  background: var(--btn); color: var(--btn-t);
+  border: none; border-radius: var(--rm);
+  font-size: 14px; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: opacity .15s, transform .15s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-s {
+  flex: 1; padding: 11px 16px;
+  background: var(--btn2); color: var(--btn2-t);
+  border: 1px solid var(--border); border-radius: var(--rm);
+  font-size: 14px; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: opacity .15s, transform .15s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-p:hover, .btn-s:hover { opacity: .85; }
+.btn-p:active, .btn-s:active { transform: scale(.97); }
+.btn-ok { background: #dcfce7 !important; color: #16a34a !important; border-color: #bbf7d0 !important; }
+[data-theme="dark"] .btn-ok { background: #002211 !important; color: #4ade80 !important; }
+
+/* ── SUB-HEADER ───────────────────────────────── */
+.sub-hdr {
+  margin: 36px 0 18px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.sub-hdr-title { font-size: 22px; font-weight: 700; letter-spacing: -.3px; }
+.sub-hdr-sub { font-size: 14px; color: var(--text2); margin-top: 4px; }
+
+
+/* ── SCROLLBAR ────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ── RESPONSIVE ───────────────────────────────── */
+@media(max-width: 768px) {
+  .page { padding: 24px 16px 48px; }
+  .nav-inner { padding: 0 16px; }
+  .nav-logo { margin-right: 20px; font-size: 15px; }
+  .nav-tab { padding: 5px 10px; font-size: 13px; }
+  .name-card { padding: 18px; gap: 14px; }
+  .nc-fields { flex-direction: column; }
+  .nc-hint { min-width: unset; width: 100%; }
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">AI Trend · <span>Промпты</span></div>
+    <div class="nav-tabs">
+      <button class="nav-tab on" onclick="sw('boys',this)">🎮 Мальчики</button>
+      <button class="nav-tab"    onclick="sw('girls',this)">👗 Девочки</button>
+      <button class="nav-tab"    onclick="sw('photo',this)">📸 Фото со звездой</button>
+    </div>
+    <div class="nav-right">
+      <button class="theme-btn" id="tbtn" onclick="toggleTheme()">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── PAGE ─────────────────────────────────────── -->
+<div class="page">
+
+  <!-- Name card -->
+  <div class="name-card">
+    <div class="nc-label">✏️ Персонализация</div>
+    <div class="nc-fields">
+      <div class="nc-field">
+        <label>Имя ученика</label>
+        <input id="inp-name" type="text" placeholder="Например: Амир" oninput="updateAll()" maxlength="25">
+      </div>
+      <div class="nc-field">
+        <label>Описание ученика</label>
+        <input id="inp-desc" type="text" placeholder="Амбициозный, добрый, весёлый" oninput="updateAll()" maxlength="80">
+      </div>
+    </div>
+    <div class="nc-hint" id="nc-hint">💡 Введи имя и характер — они<br>появятся в играх как об авторе</div>
+  </div>
+
+  <!-- ══ BOYS ══════════════════════════════════ -->
+  <div id="boys" class="sec on">
+    <div class="sec-hdr">
+      <div class="sec-label">Раздел 01</div>
+      <div class="sec-title">Игры для мальчиков</div>
+      <div class="sec-sub">Мальчики 12–17 любят скорость, соревнование и статус. Имя игрока встроено в каждую игру.</div>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#eff6ff">🏎️</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.9</span><span class="bdg b-top">ТОП-1</span><span class="bdg b-time">⏱ 3 мин</span></div>
+            <div class="card-name">Turbo Racer</div>
+            <div class="card-desc">Гонка на выживание · нарастающая скорость · рекорды</div>
+            <div class="card-tag">Разработчик: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="b-turbo"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('b-turbo',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('b-turbo',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#f0f9ff">🚀</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.8</span><span class="bdg b-time">⏱ 3 мин</span></div>
+            <div class="card-name">Asteroid Blast</div>
+            <div class="card-desc">Космический шутер · волны астероидов · боссы</div>
+            <div class="card-tag">Пилот: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="b-asteroid"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('b-asteroid',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('b-asteroid',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#fff1f2">🥊</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.7</span><span class="bdg b-time">⏱ 3 мин</span></div>
+            <div class="card-name">Street Brawl</div>
+            <div class="card-desc">Файтинг · комбо-удары · 3 раунда · HP бар</div>
+            <div class="card-tag">Боец: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="b-brawl"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('b-brawl',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('b-brawl',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#f0fdf4">🏰</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.7</span><span class="bdg b-time">⏱ 3 мин</span></div>
+            <div class="card-name">Tower Defense</div>
+            <div class="card-desc">Стратегия · волны врагов · 3 вида башен · апгрейды</div>
+            <div class="card-tag">Командир: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="b-tower"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('b-tower',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('b-tower',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#f0fdf4">⚽</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.8</span><span class="bdg b-time">⏱ 2 мин</span></div>
+            <div class="card-name">Penalty Kick</div>
+            <div class="card-desc">Симулятор пенальти · прицел · тепловая карта</div>
+            <div class="card-tag">Игрок №10: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="b-penalty"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('b-penalty',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('b-penalty',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#faf5ff">🧟</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.8</span><span class="bdg b-time">⏱ 3 мин</span></div>
+            <div class="card-name">Zombie Rush</div>
+            <div class="card-desc">Выживание · динамический фонарик · дни апокалипсиса</div>
+            <div class="card-tag">Выживший: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="b-zombie"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('b-zombie',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('b-zombie',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ GIRLS ══════════════════════════════════ -->
+  <div id="girls" class="sec">
+    <div class="sec-hdr">
+      <div class="sec-label">Раздел 02</div>
+      <div class="sec-title">Игры для девочек</div>
+      <div class="sec-sub">Девочки 12–17 ценят эстетику, кастомизацию и социальный нарратив.</div>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#fdf2f8">👗</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.9</span><span class="bdg b-top">ТОП</span><span class="bdg b-pink">FASHION</span></div>
+            <div class="card-name">Style Studio</div>
+            <div class="card-desc">Свой бренд одежды · дизайн образов · бутик · продажи</div>
+            <div class="card-tag">Дизайнер: <span class="nv name-tag">[NAME]</span> Studio</div>
+          </div>
+        </div>
+        <div class="pbox" id="g-style"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('g-style',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('g-style',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#fefce8">☕</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.8</span><span class="bdg b-time">⏱ 3 мин</span></div>
+            <div class="card-name">My Café</div>
+            <div class="card-desc">Своё кафе · гости · рецепты · рейтинг · чаевые</div>
+            <div class="card-tag">Владелица: Кафе <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="g-cafe"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('g-cafe',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('g-cafe',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#f0fdf4">🐾</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.9</span><span class="bdg b-time">⏱ 3 мин</span></div>
+            <div class="card-name">Pet World</div>
+            <div class="card-desc">Виртуальный питомец · уход · мини-игры · настроение</div>
+            <div class="card-tag">Хозяйка: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="g-pet"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('g-pet',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('g-pet',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#fff0f6">📸</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.8</span><span class="bdg b-pink">БЛОГ</span></div>
+            <div class="card-name">Blog Star</div>
+            <div class="card-desc">Симулятор блогера · посты · подписчики · коллабы</div>
+            <div class="card-tag">Блогер: <span class="nv">@</span><span class="nv name-tag">[NAME]</span><span class="nv">_official</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="g-blog"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('g-blog',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('g-blog',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#faf5ff">🔍</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.7</span><span class="bdg b-pur">ДЕТЕКТИВ</span></div>
+            <div class="card-name">Mystery Girl</div>
+            <div class="card-desc">Детектив-квест · улики · 3 подозреваемых · развязка</div>
+            <div class="card-tag">Детектив: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="g-mystery"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('g-mystery',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('g-mystery',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#faf5ff">✨</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ 4.9</span><span class="bdg b-pur">МАГИЯ</span><span class="bdg b-pur">RPG</span></div>
+            <div class="card-name">Spell Academy</div>
+            <div class="card-desc">Академия магии · зелья · руны · заклинания · экзамен</div>
+            <div class="card-tag">Волшебница: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="g-spell"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('g-spell',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('g-spell',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ PHOTO ══════════════════════════════════ -->
+  <div id="photo" class="sec">
+    <div class="sec-hdr">
+      <div class="sec-label">Раздел 03 · Nano Banano 2 / Gemini Imagen</div>
+      <div class="sec-title">Фото со звездой</div>
+      <div class="sec-sub">Вставь промпт в Nano Banano 2 → получи фото за 30 секунд. Самый вирусный момент урока.</div>
+    </div>
+
+    <!-- Celebrities -->
+    <div class="grid grid-3">
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#fffbeb">⚽</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ ВИРУС</span><span class="bdg b-time">ФУТБОЛ</span></div>
+            <div class="card-name">Криштиану Роналду</div>
+            <div class="card-desc">CR7 · стадион · мечта каждого мальчика</div>
+            <div class="card-tag">Фото с: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="p-ronaldo"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('p-ronaldo',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('p-ronaldo',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#fffbeb">🏆</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ ВИРУС</span><span class="bdg b-time">ФУТБОЛ</span></div>
+            <div class="card-name">Лионель Месси</div>
+            <div class="card-desc">GOAT · Кубок мира 2022 · Аргентина</div>
+            <div class="card-tag">Фото с: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="p-messi"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('p-messi',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('p-messi',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#fdf2f8">🎤</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-pink">POP</span><span class="bdg b-star">⭐ ВИРУС</span></div>
+            <div class="card-name">Taylor Swift</div>
+            <div class="card-desc">Eras Tour · поп-икона · мечта девочек</div>
+            <div class="card-tag">Фото с: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="p-taylor"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('p-taylor',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('p-taylor',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#f0f9ff">🚀</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-blue">TECH</span><span class="bdg b-time">SPACEX</span></div>
+            <div class="card-name">Elon Musk</div>
+            <div class="card-desc">Tesla · SpaceX · X · флекс для tech-ребят</div>
+            <div class="card-tag">Фото с: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="p-elon"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('p-elon',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('p-elon',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#fff1f2">🥊</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-star">⭐ МОЩЬ</span><span class="bdg b-time">БОКС</span></div>
+            <div class="card-name">Майк Тайсон</div>
+            <div class="card-desc">Легенда бокса · чемпион мира в тяжёлом весе</div>
+            <div class="card-tag">Фото с: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="p-tyson"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('p-tyson',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('p-tyson',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#faf5ff">🎵</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-pur">K-POP</span><span class="bdg b-pink">ARMY</span></div>
+            <div class="card-name">BTS</div>
+            <div class="card-desc">K-pop иконы · для фанаток · концерт мечты</div>
+            <div class="card-tag">Фото с: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="p-bts"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('p-bts',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('p-bts',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Superheroes + Tokayev -->
+    <div class="sub-hdr">
+      <div class="sub-hdr-title">🦸 Супергерои и VIP-персоны</div>
+      <div class="sub-hdr-sub">Самые вирусные фото — дети сразу отправляют друзьям</div>
+    </div>
+    <div class="grid grid-3">
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#fff1f2">🕷️</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-hero">MARVEL</span><span class="bdg b-star">⭐ ВИРУС</span></div>
+            <div class="card-name">Spider-Man</div>
+            <div class="card-desc">Красно-синий костюм · паутина · Нью-Йорк</div>
+            <div class="card-tag">Фото с: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="p-spiderman"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('p-spiderman',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('p-spiderman',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#f1f5f9">🦇</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-hero">DC</span><span class="bdg b-star">⭐ СТИЛЬ</span></div>
+            <div class="card-name">Batman</div>
+            <div class="card-desc">Тёмный рыцарь · Готэм · чёрная броня</div>
+            <div class="card-tag">Фото с: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="p-batman"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('p-batman',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('p-batman',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#fff7ed">🤖</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-hero">MARVEL</span><span class="bdg b-time">TECH</span></div>
+            <div class="card-name">Iron Man</div>
+            <div class="card-desc">Красно-золотой костюм · реактор · Тони Старк</div>
+            <div class="card-tag">Фото с: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="p-ironman"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('p-ironman',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('p-ironman',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:#e0f2fe">🇰🇿</div>
+          <div class="card-meta">
+            <div class="card-badges"><span class="bdg b-kz">КАЗАХСТАН</span><span class="bdg b-blue">ПРЕЗИДЕНТ</span></div>
+            <div class="card-name">Президент Токаев</div>
+            <div class="card-desc">Президент РК · официальный приём · государственный визит</div>
+            <div class="card-tag">Фото с: <span class="nv name-tag">[NAME]</span></div>
+          </div>
+        </div>
+        <div class="pbox" id="p-tokayev"></div>
+        <div class="card-actions">
+          <button class="btn-p" onclick="cp('p-tokayev',this)">📋 Скопировать</button>
+          <button class="btn-s" onclick="cp('p-tokayev',this)">↗ Поделиться</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</div><!-- /page -->
+
+<script>
+// ─── TEMPLATES ────────────────────────────────────────────────────────────
+const T = {
+'b-turbo':`Create a browser game in a single HTML file using HTML5 Canvas — endless survival racing "TURBO RACER".
+
+PLAYER: Racer = [NAME] · Car = "[NAME]-X9" · Badge top-right: "AI Engineer · [NAME]"
+Developer card (show on start screen and game over screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY:
+- Top-down endless road, speed increases every 10 s
+- Controls: arrow keys / A D · mobile: on-screen LEFT RIGHT buttons
+- Obstacles: 3 types of oncoming cars + random barriers · 3 neon heart lives
+- Score every second · personal best saved in localStorage
+- Start screen: "Hey [NAME], ready to race?" · Death: "[NAME] crashed! Record: X pts. Try again?"
+
+GRAPHICS — make it visually stunning:
+- Deep black background #050510 with subtle upward-scrolling starfield
+- Road: dark asphalt with GLOWING cyan #00d4ff lane dividers scrolling downward at game speed
+- Purple neon guardrails with glow on both road edges
+- Player car: aerodynamic top-down silhouette with cyan underglow, 5-copy motion-blur trail behind it
+- Speed lines streaking horizontally past the car (white → transparent)
+- Animated orange-yellow exhaust flame beneath car
+- Obstacle cars: neon-colored (red / orange / green) each with headlight glow
+- HUD: frosted glass pill — speed in km/h (60→300+), neon ❤️ heart lives, best score
+- New record: full-screen gold flash + "🏆 NEW RECORD [NAME]!" large animated bounce text
+- Start screen: giant "TURBO RACER" neon-glow title, pulsing START button
+
+TECHNICAL: Single .html file · all CSS and JS inline · vanilla JS only · requestAnimationFrame 60fps · no CDN`,
+
+'b-asteroid':`Create a browser game in a single HTML file using HTML5 Canvas — space shooter "ASTEROID BLAST".
+
+PLAYER: Pilot = [NAME] · Ship = "[NAME] SHIP" · Top bar: "AI Engineer · [NAME] · Pilot in Space"
+Developer card (show on start screen and game over screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY:
+- Ship at bottom, asteroids fall in waves from the top
+- Controls: arrow keys + SPACE to shoot · mobile: on-screen LEFT RIGHT FIRE buttons
+- Wave 1 = 5 asteroids, each wave +3 more · every 5 waves: BOSS (5 HP, shoots back)
+- Power-ups drop: 🛡 shield 3s invincibility / 🔫 double shot / ❤️ extra life · 3 lives total
+- Start: "Captain [NAME], to the bridge! Wave 1 incoming." · Boss kill: "Boss destroyed, [NAME]!"
+
+GRAPHICS — make it visually stunning:
+- Deep black space, 3-layer parallax starfield (tiny/medium/large at different scroll speeds)
+- Purple, blue, dark-red nebula clouds in background (static, beautiful)
+- Player ship: sleek sci-fi triangle with bright CYAN engine glow, animated blue exhaust flame
+- Laser beams: thin bright green/yellow lines with bloom glow effect
+- Asteroids: irregular rotating polygons (gray/brown), each at unique rotation speed
+- Explosions: 20+ orange/yellow/white particles burst outward, shrink and fade over 0.5 s
+- BOSS: 3× bigger, glowing red outline, pulsing red aura, dedicated health bar at screen top
+- Power-up capsules: spinning glowing icons with color-coded auras (blue/yellow/green)
+- HUD: frosted dark bar — wave number, score, best score, neon heart lives
+
+TECHNICAL: Single .html file · all CSS and JS inline · vanilla JS only · 60fps · no CDN`,
+
+'b-brawl':`Create a browser game in a single HTML file using HTML5 Canvas — fighting game "STREET BRAWL".
+
+PLAYER: Fighter = [NAME] · HP bars: "[NAME]" on left, "ENEMY" on right · Badge: "AI Engineer · [NAME]"
+Developer card (show on start screen and game over screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY:
+- [NAME]'s fighter on left, AI bot on right, both on a platform
+- Controls: A/D move · W jump · J punch · K block (−80% damage) · L special (charges 3 s, 30 damage)
+- Enemy bot randomly switches: aggressive / defensive / retreating AI modes
+- 3 rounds, first to win 2 wins the match
+- Combo: 3 consecutive hits without missing → golden "COMBO x3!" floating text
+- Round win: "[NAME] WINS! Round goes to [NAME]!" · Round loss: "[NAME], don't give up!"
+
+GRAPHICS — make it visually stunning:
+- Background: neon-lit nighttime city street — dark skyscraper silhouettes, glowing signs (HOTEL / BAR / 24H) in pink/cyan/red
+- Animated: slowly blinking neon signs, distant car headlights moving across background
+- Floor: wet asphalt with shimmering neon color reflections beneath both fighters
+- [NAME] fighter: stylized street fighter silhouette in blue/white outfit with cyan energy aura
+- Enemy: red/black fighter with red energy aura
+- Punch: fast arm extension + bright impact flash at collision point
+- Hit effect: screen shake 2px + colored spark burst (10 particles) at impact
+- Impact text: "POW!" / "BAM!" / "COMBO!" — large bold, bounces and fades
+- HP bars: gradient green→yellow→red, smooth animated drain, glass-effect container with glow
+- Special charge bar: pulses yellow→white when fully charged, electric spark effect around it
+- Round transition: black overlay slides in with large "ROUND X" centered text
+
+TECHNICAL: Single .html file · all CSS and JS inline · vanilla JS only · 60fps · no CDN`,
+
+'b-tower':`Create a browser game in a single HTML file using HTML5 Canvas — "TOWER DEFENSE".
+
+PLAYER: Commander = [NAME] · Title: "TOWER DEFENSE · Commander [NAME]" · Map: "[NAME]'s Map"
+Developer card (show on start screen and game over screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY:
+- Enemies march along a winding path from left to right
+- Click grid cells adjacent to the path to place towers
+- 3 tower types: Arrow Tower (50 gold) / Frost Tower (75 gold) / Cannon Tower (100 gold)
+- Gold: +20 per kill, +15 every 10 s passively · 10 waves, each wave +30% enemy HP
+- Base has 20 HP, each enemy that reaches it deals −1 HP
+- Upgrade: click a tower → "Upgrade (50g)" button → Lv1 → Lv2 → Lv3
+- Victory: "Commander [NAME] defended the base! All 10 waves repelled!"
+
+GRAPHICS — make it visually stunning:
+- Top-down illustrated look: lush green grass tiles with subtle texture variation, darker patches
+- Winding dirt road enemy path with stone edges and pebble texture detail
+- Trees, rocks, and bushes decorating non-path grid areas (drawn with canvas shapes)
+- Arrow Tower: wooden structure, glows yellow when firing, arrow projectile with motion trail
+- Frost Tower: icy blue crystal tower, shoots blue slow-beam, frozen enemies get white frost overlay and ice-crystal particle effect
+- Cannon Tower: dark stone tower, fires black cannonball, large explosion on impact (orange burst + 15 particles + screen shake)
+- Enemies: distinct fantasy creature shapes (goblins, trolls, skeletons) with individual HP bars above
+- Tower range: semi-transparent soft glow ring visible on hover
+- Gold: animated "+20" golden floating text on each kill
+- Wave banner: slides in from top — bold "WAVE X / 10" with a dramatic flash effect
+
+TECHNICAL: Single .html file · all CSS and JS inline · vanilla JS only · grid ~20×12 cells · no CDN`,
+
+'b-penalty':`Create a browser game in a single HTML file using HTML5 Canvas — penalty shootout "PENALTY KICK".
+
+PLAYER: Footballer = [NAME] · Jersey number: 10 · Stats label: "Player: [NAME] · AI Engineer"
+Developer card (show on start screen and game over screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY:
+- First-person perspective looking at the goal in 3D perspective
+- Aim with mouse/touch anywhere inside the goal, click/tap to shoot
+- Goalkeeper dives 0.3 s after kick; gets 5% better at reading aim with each round
+- 5 kicks per series, scored as X/5 · best series saved to localStorage
+- GOAL: "[NAME] SCORES!" green text + confetti explosion
+- SAVED: "Goalkeeper saves! [NAME] missed this one..."
+- After 5 kicks: full series result + "Best series for [NAME]: Y/5"
+- Mini heat-map of the goal shows where [NAME] aims most
+
+GRAPHICS — make it visually stunning:
+- Lush green pitch with realistic white line markings (penalty spot, 18-yard box)
+- Goal rendered in 3D perspective (trapezoid), white posts and crossbar, deep grid-line net
+- Net physics: ripples and sways when ball hits (animated canvas)
+- Blurred colorful crowd in stadium stands behind the goal
+- Ball: black and white pentagon pattern, arcs toward goal with perspective scaling and spin rotation
+- Aim cursor: pulsing white crosshair circle inside goal, turns green (good angle) / red (risky)
+- Goalkeeper: detailed silhouette in goalkeeper kit with gloves, smooth diving animation left/right
+- GOAL effect: full-screen green flash, 80+ multicolor confetti particles, "GOAL!" in giant animated letters
+- SAVED effect: red screen flash, goalkeeper celebration pose
+- HUD: series score X/5 as ⚽ football icons, heat-map overlay in bottom corner
+
+TECHNICAL: Single .html file · all CSS and JS inline · vanilla JS only · works on mobile touch · no CDN`,
+
+'b-zombie':`Create a browser game in a single HTML file using HTML5 Canvas — top-down zombie survival "ZOMBIE RUSH".
+
+PLAYER: Survivor = [NAME] · Top bar: "Survivor [NAME] · AI Engineer · Day: X" · Weapon: "[NAME]-9000"
+Developer card (show on start screen and game over screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY:
+- Top-down view; WASD to move, mouse aim + click to shoot
+- Zombies emerge from all screen edges; each day more spawn and move faster
+- 1 day = 60-second wave, then 5-second rest between days
+- Ammo is limited (shown in HUD), pick up ammo dropped by killed zombies
+- Power-ups appear randomly: 🩹 medkit +30 HP / 🛡 armor absorbs 2 hits / 💥 shotgun 5 shots
+- Player: 100 HP, zombies deal 10 HP per touch · Death: "Day [NAME] ended on day X. Zombies killed: Y"
+- Best day record saved to localStorage
+
+GRAPHICS — make it visually stunning:
+- Dark post-apocalyptic top-down map: cracked asphalt, broken car wrecks as obstacles, scattered debris
+- Dynamic flashlight: [NAME]'s character casts a cone of yellow-white light toward mouse direction — everything outside the cone is in dark shadow (canvas globalCompositeOperation)
+- Player: clear top-down silhouette with visible rifle, distinct color from zombies
+- 3 zombie types: fat slow zombie (dark green) / fast runner (bright green) / tank (huge, near-black), each with HP bar above
+- Bullet: bright orange flash projectile with short motion trail
+- Muzzle flash: white/orange burst at gun barrel on every shot
+- Shell casings: tiny golden rectangles fly sideways and fade on floor
+- Zombie death: 10+ red splatter particles burst outward, dark blood puddle drawn on floor that persists (fades after 5 s)
+- Day transition: dark overlay with large centered "DAY X" text and countdown timer
+- HUD: day counter, HP bar (green→red gradient), ammo as bullet icons, total zombie kill count
+
+TECHNICAL: Single .html file · all CSS and JS inline · vanilla JS only · 60fps · no CDN`,
+
+'g-style':`Create a browser game in a single HTML file using HTML5 Canvas — fashion brand simulator "STYLE STUDIO".
+
+PLAYER: Designer = [NAME] · Brand = "[NAME] Studio" · Permanent badge: "AI Designer · [NAME]"
+Developer card (show on start screen and end screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY (3 screens):
+Screen 1 — ATELIER: elegant mannequin silhouette, 4 clothing categories (top/bottom/shoes/accessories), 5 options each drawn with canvas over the mannequin, 12-color palette to recolor selected items, "Save Look" button transitions to boutique
+
+Screen 2 — BOUTIQUE "[NAME] Studio": saved looks displayed as product cards with AI-generated prices (rare color combos = higher price), customer arrives every 5 s (5 unique avatar styles), buys or leaves, "+500₽ · Customer bought the look!" green floating text + animated coin arc
+
+Screen 3 — BRAND REPORT "[NAME] Studio": total revenue, top-selling look, store rating 1–5★, "New Collection" button to restart
+
+GRAPHICS — make it visually stunning:
+- Warm luxury aesthetic: dusty rose background #f5e0e8 with subtle linen texture pattern
+- Decorative gold frame around mannequin area, soft drop shadows on all elements
+- Mannequin: graceful elongated canvas silhouette, clothes drawn as layered shaped fills
+- Color palette: circular swatches with gold outline on selected, sparkle on selection
+- Boutique: marble-look white floor, golden clothes racks visible on sides, warm spotlight lighting effect
+- 6 distinct customer avatar illustrations with different hair, outfit, skin tone
+- Purchase animation: small handbag icon flies in an arc from rack to the customer
+- Revenue record confetti: rose-gold particles (pink + gold mix)
+- "[NAME] Studio" brand name in elegant canvas serif letterform with letter-spacing
+
+TECHNICAL: Single .html file · all CSS and JS inline · vanilla JS only · localStorage saves looks · no CDN`,
+
+'g-cafe':`Create a browser game in a single HTML file using HTML5 Canvas — café management simulator "MY CAFÉ".
+
+PLAYER: Owner = [NAME] · Café = "Café [NAME]" · Top bar always shows: "Owner · [NAME] · AI Entrepreneur"
+Developer card (show on start screen and end screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY:
+- Side-view café: counter, 4 round tables, decorative cash register
+- Guests arrive every 3–8 s (interval shrinks as the work day progresses)
+- Speech bubble above each guest shows order: ☕ coffee / 🍰 cake / 🥤 juice / 🥪 sandwich
+- Click guest → order accepted → click matching item on counter → item delivered to table
+- Tip based on speed: fast (under 4 s) = 3 coins · normal = 2 · slow = 1 coin
+- Guest patience bar drains over 10 s; if they leave = −1 star rating
+- Café rating 1–5★ based on happy vs walked-out guests
+- At 5★: "Café [NAME] — best in town! Featured in the city magazine! 🌟"
+- Every 30 s: revenue flash banner "Café [NAME] earned X coins today"
+
+GRAPHICS — make it visually stunning:
+- Warm cozy interior: soft lavender/cream walls, animated blinking fairy lights string at ceiling top
+- Wooden counter with grain texture drawn via canvas, menu chalkboard on wall behind it
+- 4 round tables with checkered tablecloths, small flower vase centerpiece on each
+- 6 distinct guest characters with smooth walk-in animation (woman, man, teen, elder, child, businessperson)
+- Speech bubble: rounded white shape with soft drop shadow, order icon + patience bar below bubble
+- Counter items: large appealing ☕ 🍰 🥤 🥪 illustrations, soft glow on hover
+- Coin animation: golden coin icon arcs from table to counter coin counter on tip
+- Walked-out guest: small angry 😤 emoji floats above their head as they exit
+- Day progress bar: warm amber gradient "Work Day" bar at bottom of screen
+- Star rating: golden stars glow and pulse when changing
+
+TECHNICAL: Single .html file · all CSS and JS inline · vanilla JS only · works on mobile · no CDN`,
+
+'g-pet':`Create a browser game in a single HTML file using HTML5 Canvas — virtual pet simulator "PET WORLD".
+
+PLAYER: Owner = [NAME] · Top bar: "Owner [NAME] · AI Pet Trainer" · Pet name: asked via text input on start
+Developer card (show on start screen and end screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY:
+- Pet selection screen: kitten / puppy / bunny / hamster (4 illustrated canvas silhouettes to click)
+- 4 animated stat bars: Hunger / Happiness / Cleanliness / Energy (each 0–100%)
+- Auto drain: Hunger −5/min · Happiness −3/min · Cleanliness −2/min · Energy −1/min
+- Action buttons: 🍖 Feed +30 Hunger · 🎾 Play +25 Happy −10 Energy (launches mini-game) · 🛁 Bath +40 Clean · 💤 Sleep +50 Energy (15 s, Zzz animation)
+- Mini-game: colorful balls bounce across screen, click 5 of them within 10 seconds
+- Pet mood changes its animation based on bar levels: sad / neutral / happy / overjoyed
+- Pet "speaks": speech bubble shows 8 different mood-matching phrases that cycle
+- Record: longest continuous time all 4 bars stayed above 50% simultaneously
+
+GRAPHICS — make it visually stunning:
+- Cozy bedroom background: pastel mint walls, soft patterned rug on wooden floor, window with slowly drifting clouds (animated)
+- Each of the 4 pets richly drawn with canvas curves and motion:
+  · Kitten: fluffy round body, big eyes that blink every 3 s, tail that slowly sways, ears that randomly twitch
+  · Puppy: floppy ears, pink tongue visible when happy, tail wags faster when joy is high
+  · Bunny: long ears droop when sad, nose twitches on timer, subtle hopping animation
+  · Hamster: chubby cheeks, runs in place animation when energy is high
+- Stat bars: gradient-filled pill shapes (food=orange, happy=pink, clean=blue, energy=yellow), soft neon-glow edges
+- Action buttons: large rounded pastel buttons with drop shadow, satisfying bounce scale on click
+- Sleep: Zzz letters drift upward and fade out, pet's eyes draw closed
+- Bath: soap bubbles of various sizes float up around the pet, sparkle flash when cleanliness peaks
+- Speech bubble: white rounded shape with shadow, soft tail pointing at pet, text fades in gently
+
+TECHNICAL: Single .html file · all CSS and JS inline · vanilla JS only · works on PC and tablet · no CDN`,
+
+'g-blog':`Create a browser game in a single HTML file using HTML5 Canvas — social media influencer simulator "BLOG STAR".
+
+PLAYER: Blogger = [NAME] · Handle = @[NAME]_official · Profile bar: "@[NAME]_official · AI Content Creator"
+Developer card (show on start screen and final results screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY (3 screens):
+Screen 1 — POST EDITOR: topic cards (👗 Fashion / ✈️ Travel / 🍕 Food / 😂 Humor / 💡 Life Hack), format selection (Photo ×1 / Video ×1.5 / Reels ×2 / Story ×0.8 reach multiplier), timing (🌅 Morning / ☀️ Afternoon / 🌙 Evening affects views), "Post it!" button
+
+Screen 2 — REACTIONS (10-second live animation): 👁 views / ❤️ likes / 💬 comments counters animate upward in real time; 25% chance brand collab offer "+5000₽ · Brand wants to work with you!"; 15% chance "🔥 POST WENT VIRAL! ×3 reach!"
+
+Screen 3 — PROFILE @[NAME]_official: follower count grows after each post, best post card, total reach, total collab income, tier badge: Nano (0–1k) / Micro (1k–10k) / Macro (10k–100k) / Mega (100k+); after 5 posts → "Final Results" button
+
+GRAPHICS — make it visually stunning:
+- Clean Instagram/TikTok-style UI: white/light-gray background, colorful gradient accents
+- Profile: circular avatar with rainbow gradient ring border, large bold follower count with animated increment
+- Topic cards: each has a distinct gradient background, large emoji, soft shadow, scale on hover
+- Post animation: selected card "flies up" and shrinks into a feed column with a satisfying whoosh
+- Reaction counters: numbers tick up with slot-machine animation style; floating hearts drift upward on screen
+- Viral effect: full-screen orange flash, firework particles explode from all corners, "🔥 VIRAL!" in massive animated text
+- Brand collab: gold shimmer card slides in from the right with trailing sparkles
+- Follower milestones (1k, 10k, 100k): burst confetti + tier badge glows and pulses
+- Tier badges: distinct illustrated badge icons for each tier, glow animation on level-up
+
+TECHNICAL: Single .html file · all CSS and JS inline · vanilla JS only · no CDN`,
+
+'g-mystery':`Create a browser game in a single HTML file using HTML5 Canvas — detective mystery quest "MYSTERY GIRL".
+
+PLAYER: Detective = [NAME] · Top bar: "Detective [NAME] · AI Investigator" · Case: "Case #1 · Detective [NAME] is on the scene"
+Developer card (show on start screen and solution screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY:
+- Story: the school championship trophy mysteriously disappeared (safe, fun theme)
+- 4 location cards to visit: Classroom / Cafeteria / Library / Schoolyard
+- Each location has 3–5 clickable objects (golden pulse glow on hover); each gives a clue or red herring
+- Collected clues appear on the "Investigation Board" side panel as pinned cards
+- 3 suspects shown with descriptions; player clicks one to accuse them
+- 3 free hints from "AI Assistant [NAME]" (each hint costs 1 detective star)
+- Correct accusation: "[NAME] cracked the case! Used X hints." · Wrong: "Not the right suspect, [NAME]. Keep investigating..."
+- Detective rating ★★★★★ (lose 1 star per hint used)
+
+GRAPHICS — make it visually stunning:
+- Overall: dark moody purple/navy noir detective atmosphere
+- Each location is a richly drawn canvas scene:
+  · Classroom: rows of desks, blackboard with equations, trophy display shelf (empty!), flickering fluorescent ceiling light
+  · Cafeteria: lunch tables and trays, a suspicious stain near one chair
+  · Library: tall bookshelves casting long shadows, reading lamp creating a warm pool of light, scattered papers
+  · Schoolyard: tree silhouettes, wooden benches, blue moonlight casting shadows
+- Clickable objects: subtle golden shimmer pulse to signal interactivity
+- Investigation Board: realistic cork board texture with pinned paper clue cards; red string lines connect related clues
+- Clue cards: yellowed paper look with EVIDENCE stamp (green) or RED HERRING stamp (red)
+- Suspects: dark silhouettes with glowing "?" until accused; on accusation, silhouette fills with character illustration
+- AI Hint: speech bubble from small glowing robot avatar in the bottom corner
+- Correct solution: white screen flash → slow zoom on culprit → confetti cascade → "[NAME] is a genius!" in gold letters
+- Detective stars: dramatic dim animation when a star is lost
+
+TECHNICAL: Single .html file · all CSS and JS inline · vanilla JS only · mouse + touch · no CDN`,
+
+'g-spell':`Create a browser game in a single HTML file using HTML5 Canvas — magic academy RPG "SPELL ACADEMY".
+
+PLAYER: Witch = [NAME] · Academy = "[NAME] Academy" · Top bar: "Witch [NAME] · AI Mage · Level X"
+Developer card (show on start screen and final exam screen as a stylized card):
+  Name: [NAME] · About: [DESC] · "Made with AI ⚡"
+
+GAMEPLAY:
+- Robe selection screen on start: blue / purple / gold (3 illustrated canvas character options)
+- 4 sequential subject quests to complete:
+  🧪 Potions: drag ingredients into the cauldron in correct order (implemented via mousedown/mousemove/mouseup)
+  🔮 Runes: memorize a pattern of 4 glowing runes then reproduce it (Simon Says mechanic, 3 rounds)
+  ⭐ Spells: click rapidly on vanishing star sparks — catch 10 of them within 15 seconds
+  🎓 Final Exam: all three challenges back-to-back without any mistakes allowed
+- XP and character level increase after each completed subject
+- Achievement badges unlock: "Potion Master" / "Rune Keeper" / "Star Catcher"
+- Final Exam passed: "[NAME] became Supreme Witch of [NAME] Academy! 👑"
+
+GRAPHICS — make it visually stunning:
+- Deep purple/midnight blue atmospheric background with animated starfield (stars twinkle at random intervals)
+- Colorful nebula wisps drift slowly across the background (semi-transparent purple and teal clouds)
+- Stone gothic arch frame around the play area, wall torch sconces with animated flickering orange flames
+- Cauldron: large black iron cauldron, bubbling liquid that changes color as potions mix (animated rising circles), purple/green steam wisps curling upward
+- Ingredient bottles: beautifully illustrated glass flasks with colored liquids, handwritten labels, glow when dragged
+- Rune stones: magical glowing symbols carved on dark stone tiles; correct rune flashes bright white, wrong rune = red shake effect
+- Spell stars: multi-pointed stars in gold/cyan/pink that appear randomly, pulse and slowly shrink — click explodes them into 15 sparkle particles
+- XP progress bar: gold gradient with animated shimmer wave traveling across it when XP is gained
+- Level-up: burst of golden stars radiating from character, crown icon appears briefly above [NAME]'s name
+- Final Exam pass: full-screen gold particle explosion, large ornate crown graphic, "[NAME] is Supreme Witch!" in decorative serif text
+
+TECHNICAL: Single .html file · drag via mousedown/mousemove/mouseup · vanilla JS only · works on PC and tablet · no CDN`,
+
+'p-ronaldo':`A hyperrealistic candid photo of [NAME] (use the uploaded reference photo) and a world-famous Portuguese football superstar known for his muscular athletic build, CR7 branded jersey, perfectly styled dark hair and iconic confident smile, standing side by side with their arms around each other's shoulders, both grinning directly at the camera, massive sold-out football stadium background with green pitch and roaring crowd blurred behind them, warm golden hour sunlight, shot casually on iPhone by a friend nearby, photojournalism candid style, 8k ultra sharp, DSLR shallow depth of field`,
+
+'p-messi':`A hyperrealistic candid fan photo of [NAME] (use the uploaded reference photo) standing next to the world's greatest Argentine football legend, known for his shorter height, wavy dark hair, blue and white striped national team jersey, holding the golden World Cup trophy, both smiling warmly and genuinely at the camera, confetti raining in a victory celebration stadium background, warm natural sunlight, looks exactly like a spontaneous real fan photo taken by a bystander, 8k resolution, ultra sharp, DSLR bokeh background`,
+
+'p-taylor':`A hyperrealistic official meet-and-greet photo of [NAME] (use the uploaded reference photo) hugging a world-famous American blonde pop superstar known for her signature red lips, long flowing golden hair, dazzling sequin stage outfit in pink and gold, and legendary record-breaking world tours, both laughing and smiling with pure genuine joy, colorful concert backstage area with bokeh stage lights glowing behind them, professional event photographer lighting, 8k ultra sharp, feels completely authentic and real`,
+
+'p-elon':`A hyperrealistic press-style photo of [NAME] (use the uploaded reference photo) standing confidently next to the world's most famous tech billionaire CEO known for founding companies that build electric cars, launch rockets to Mars, and run major social media platforms, wearing his signature casual dark t-shirt, both giving enthusiastic thumbs up and smiling at the camera, background is a futuristic rocket assembly factory with a towering white rocket visible behind them, dramatic cinematic lighting, looks like a real Reuters news photo, 8k ultra sharp, professional press photography quality`,
+
+'p-tyson':`A hyperrealistic photo of [NAME] (use the uploaded reference photo) posing confidently next to a legendary American heavyweight boxing world champion known for his extremely muscular powerful build, distinctive face tattoo, black boxing shorts, a championship belt around his waist, and his fierce yet warm and genuine smile, both throwing playful boxing fists toward the camera while laughing, professional boxing gym background with heavy punching bags and ring ropes visible, dramatic side studio lighting with strong shadows, looks exactly like a real sports magazine cover photo, 8k ultra sharp, cinematic quality`,
+
+'p-bts':`A hyperrealistic VIP fan meet-and-greet photo of [NAME] (use the uploaded reference photo) standing surrounded by all members of the world's most famous Korean K-pop boy group, known for their stunning coordinated fashion sense, colorful professionally styled hair in shades of purple, black, platinum blonde and pink, matching luxury designer outfits, and their massive passionate global fanbase called ARMY, all posing together in a heart shape with peace signs and big smiles, magical purple and blue concert stage lighting with bokeh light orbs behind them, shot by an official tour photographer, 8k ultra sharp, feels completely and undeniably real`,
+
+'p-spiderman':`A hyperrealistic fun photo of [NAME] (use the uploaded reference photo) standing next to a life-size Spider-Man in his iconic red and blue spider-web patterned full-body suit with large white eye lenses, both doing the famous spider-man wrist web-shooting pose toward the camera and laughing, dramatic New York City skyline at night in the background with skyscrapers and glowing windows, bright city lights and beautiful bokeh, looks exactly like a real theme park character photo or movie promotional shot, professional photography lighting, 8k ultra sharp, cinematic Marvel movie quality`,
+
+'p-batman':`A hyperrealistic dramatic cinematic photo of [NAME] (use the uploaded reference photo) standing proudly next to Batman in his iconic dark matte black tactical armor suit with the yellow bat symbol on the chest piece and flowing black cape spread wide behind him, both looking powerfully and seriously into the camera, moody dark Gotham City rooftop at night with gargoyles and blue moonlight visible behind them, dramatic low-key side lighting casting strong deep shadows with a blue atmospheric haze, looks exactly like a real Hollywood movie promotional photograph, 8k ultra sharp, IMAX cinematic quality`,
+
+'p-ironman':`A hyperrealistic behind-the-scenes style photo of [NAME] (use the uploaded reference photo) standing next to Iron Man wearing the complete iconic red and gold high-tech powered armor suit with a glowing blue arc reactor in the chest, detailed panel lines and metallic reflections on the suit, both giving a confident thumbs-up pose and smiling broadly, futuristic Stark Industries workshop background with holographic displays, robotic arms and advanced machinery visible, bright clean studio lighting with dramatic highlights gleaming on the suit surface, looks exactly like a real Marvel Studios set photo, 8k ultra sharp, cinematic quality`,
+
+'p-tokayev':`A hyperrealistic official diplomatic protocol photograph of [NAME] (use the uploaded reference photo) shaking hands and smiling warmly with the President of Kazakhstan, a distinguished silver-haired statesman known for his composed and diplomatic presence, wearing a formal dark navy blue presidential suit with a Kazakh state flag lapel pin and official medals, both standing in front of a large Kazakh national flag and the ornate golden interior of the official Presidential Palace in Nur-Sultan, warm professional ceremonial lighting, looks exactly like a real official state visit photograph published by the Presidential Press Service, 8k ultra sharp, diplomatic press photography quality`
+};
+
+// ─── RENDER ───────────────────────────────────────────────────────────────
+function updateAll() {
+  const name = document.getElementById('inp-name').value.trim();
+  const desc = document.getElementById('inp-desc').value.trim();
+  const n = name || '[NAME]';
+  const d = desc || '[DESC]';
+
+  // Fill prompt boxes — игры получают и [NAME] и [DESC], фото только [NAME]
+  Object.keys(T).forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let text = T[id].replace(/\[NAME\]/g, n);
+    // [DESC] только в игровых промптах (не фото)
+    if (!id.startsWith('p-')) {
+      text = text.replace(/\[DESC\]/g, d);
+    }
+    el.textContent = text;
+  });
+
+  // Update inline name tags
+  document.querySelectorAll('.name-tag').forEach(el => {
+    if (!el.dataset.orig) el.dataset.orig = el.textContent;
+    el.textContent = el.dataset.orig.replace(/\[NAME\]/g, n);
+  });
+
+  // Update hint
+  const hint = document.getElementById('nc-hint');
+  if (name || desc) {
+    const parts = [];
+    if (name) parts.push(`<strong>${name}</strong>`);
+    if (desc) parts.push(`<em>${desc}</em>`);
+    hint.innerHTML = `✅ ${parts.join(' · ')} — вставлено<br>в <strong>${Object.keys(T).length}</strong> промптов`;
+  } else {
+    hint.innerHTML = `💡 Введи имя и характер — они<br>появятся в играх как об авторе`;
+  }
+}
+
+// ─── TABS ─────────────────────────────────────────────────────────────────
+function sw(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── COPY ─────────────────────────────────────────────────────────────────
+function cp(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.innerHTML;
+    btn.classList.add('btn-ok');
+    btn.innerHTML = '✓ Скопировано!';
+    setTimeout(() => { btn.classList.remove('btn-ok'); btn.innerHTML = orig; }, 2200);
+  }).catch(() => {
+    const r = document.createRange();
+    r.selectNode(document.getElementById(id));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(r);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+  });
+}
+
+// ─── THEME ────────────────────────────────────────────────────────────────
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('tbtn').textContent = isDark ? '🌙' : '☀️';
+}
+
+// Init
+updateAll();
+</script>
+</body>
+</html>
